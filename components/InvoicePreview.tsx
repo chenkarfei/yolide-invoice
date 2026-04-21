@@ -3,7 +3,6 @@
 import { InvoiceData } from '@/lib/types';
 import { StandardTemplate } from './templates/StandardTemplate';
 import { ModernTemplate } from './templates/ModernTemplate';
-import { MinimalistTemplate } from './templates/MinimalistTemplate';
 import { Printer, ExternalLink } from 'lucide-react';
 
 interface Props {
@@ -35,8 +34,6 @@ export function InvoicePreview({ data }: Props) {
     switch (data.template) {
       case 'modern':
         return <ModernTemplate data={data} />;
-      case 'minimalist':
-        return <MinimalistTemplate data={data} />;
       case 'standard':
       default:
         return <StandardTemplate data={data} />;

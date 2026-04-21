@@ -75,7 +75,6 @@ export function InvoiceForm({ data, onChange, onSaveProfile, onSaveInvoice }: Pr
             >
               <option value="standard">Standard</option>
               <option value="modern">Modern</option>
-              <option value="minimalist">Minimalist</option>
             </select>
           </div>
           <div>

@@ -5,7 +5,7 @@ export interface InvoiceItem {
   unitPrice: number | string;
 }
 
-export type TemplateType = 'standard' | 'modern' | 'minimalist';
+export type TemplateType = 'standard' | 'modern';
 
 export interface InvoiceData {
   companyName: string;
