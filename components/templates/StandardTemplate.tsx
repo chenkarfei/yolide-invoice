@@ -144,15 +144,15 @@ export function StandardTemplate({ data }: Props) {
               <span>Subtotal</span>
               <span className="text-slate-900 tracking-normal">{formatCurrency(subtotal).replace('RM', '').trim()}</span>
             </div>
-            {data.discount > 0 && (
+            {Number(data.discount) > 0 && (
               <div className="flex justify-between text-xs px-2 font-bold uppercase tracking-widest text-slate-400">
                 <span>Discount <span className="text-[10px] text-red-400">(-{data.discount}%)</span></span>
                 <span className="text-red-500 tracking-normal">-{formatCurrency(discountAmount).replace('RM', '').trim()}</span>
               </div>
             )}
-            {data.taxRate > 0 && (
-              <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-slate-400 px-2">
-                <span>Tax <span className="text-[10px]">({data.taxRate}%)</span></span>
+            {Number(data.taxRate) > 0 && (
+              <div className="flex justify-between text-xs px-2 font-bold uppercase tracking-widest text-slate-400">
+                <span>SST <span className="text-[10px] text-slate-400">({data.taxRate}%)</span></span>
                 <span className="text-slate-900 tracking-normal">{formatCurrency(taxAmount).replace('RM', '').trim()}</span>
               </div>
             )}
