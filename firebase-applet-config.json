@@ -1,0 +1,10 @@
+{
+  "projectId": "yolide-invoice",
+  "appId": "1:235201191012:web:7c5f30be84c06a47195371",
+  "apiKey": "AIzaSyDOFNsO3w2RtpLsP75bMvjZirnbi7CzsCM",
+  "authDomain": "yolide-invoice.firebaseapp.com",
+  "firestoreDatabaseId": "ai-studio-ce43ccb6-540a-408e-9ebe-0d5971f00260",
+  "storageBucket": "yolide-invoice.firebasestorage.app",
+  "messagingSenderId": "235201191012",
+  "measurementId": ""
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Yolide-Invoice",
+  "description": "Generate custom invoices and receipts tailored for Malaysia with SST calculation and PDF export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
