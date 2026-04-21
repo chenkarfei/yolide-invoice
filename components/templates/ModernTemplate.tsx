@@ -34,7 +34,7 @@ export function ModernTemplate({ data }: Props) {
       <div className="bg-indigo-600 text-white p-6 flex justify-between items-center rounded-b-3xl">
         <div className="flex flex-col max-w-[50%]">
           {data.companyLogo ? (
-            <div className="bg-white p-2 rounded-lg inline-block mb-4">
+            <div className="mb-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={data.companyLogo} alt="Company Logo" className="max-h-16 object-contain" />
             </div>
