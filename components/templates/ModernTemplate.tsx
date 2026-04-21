@@ -113,13 +113,13 @@ export function ModernTemplate({ data }: Props) {
             <span>Subtotal</span>
             <span className="font-medium text-gray-900">{formatCurrency(subtotal)}</span>
           </div>
-          {data.discount > 0 && (
+          {Number(data.discount) > 0 && (
             <div className="flex justify-between py-1.5 text-gray-600">
               <span>Discount ({data.discount}%)</span>
               <span className="text-red-500 font-medium">-{formatCurrency(discountAmount)}</span>
             </div>
           )}
-          {data.taxRate > 0 && (
+          {Number(data.taxRate) > 0 && (
             <div className="flex justify-between py-1.5 text-gray-600">
               <span>SST ({data.taxRate}%)</span>
               <span className="font-medium text-gray-900">{formatCurrency(taxAmount)}</span>
