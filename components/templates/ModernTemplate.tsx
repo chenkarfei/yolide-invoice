@@ -64,7 +64,7 @@ export function ModernTemplate({ data }: Props) {
         </div>
       </div>
 
-      <div className="px-10 py-8 flex justify-between">
+      <div className="px-10 py-6 flex justify-between break-inside-avoid">
         <div className="w-[45%]">
             <h3 className="text-[#155DFC] font-black uppercase tracking-widest text-[10px] mb-2 border-b-2 border-[#155DFC]/10 pb-1 w-fit">Invoice To</h3>
             <p className="text-xl font-black text-slate-900 mb-1">{data.clientName || 'Client Name'}</p>
@@ -92,7 +92,7 @@ export function ModernTemplate({ data }: Props) {
       </div>
 
       {/* Items Table */}
-      <div className="px-10 flex-1">
+      <div className="px-10">
         <div className="rounded-xl border border-gray-200 overflow-hidden">
           <table className="w-full text-left border-collapse">
             <thead className="bg-gray-50 text-gray-900">
@@ -123,7 +123,7 @@ export function ModernTemplate({ data }: Props) {
       </div>
 
       {/* Totals */}
-      <div className="px-10 mt-6 mb-8 flex justify-end">
+      <div className="px-10 mt-4 mb-6 flex justify-end break-inside-avoid">
         <div className="w-80 bg-gray-50 p-6 rounded-xl border border-gray-100">
           <div className="flex justify-between py-1.5 text-gray-600">
             <span>Subtotal</span>
@@ -149,7 +149,7 @@ export function ModernTemplate({ data }: Props) {
       </div>
 
       {/* Notes & Terms */}
-      <div className="px-10 mt-auto pb-10">
+      <div className="px-10 pb-10 break-inside-avoid">
         <div className="grid grid-cols-2 gap-8 text-sm text-gray-500 bg-gray-50 p-6 rounded-xl border border-gray-100">
           {data.notes && (
             <div>

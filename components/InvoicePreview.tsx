@@ -64,7 +64,7 @@ export function InvoicePreview({ data }: Props) {
       
       {/* Zoom container to fit preview in right panel */}
       <div className="flex-1 overflow-auto p-4 md:p-8 flex justify-center bg-slate-100 pb-20 print:p-0 print:overflow-visible print:bg-white print:block">
-        <div className="w-[700px] min-h-[900px] origin-top shadow-2xl bg-white transition-transform duration-300 print:transform-none print:shadow-none print:m-0 print:w-full print:min-h-0 scale-[0.8] sm:scale-90 md:scale-100 lg:scale-[0.8] xl:scale-90 2xl:scale-100">
+        <div className="w-[700px] origin-top shadow-2xl bg-white transition-transform duration-300 print:transform-none print:shadow-none print:m-0 print:w-full print:min-h-0 scale-[0.8] sm:scale-90 md:scale-100 lg:scale-[0.8] xl:scale-90 2xl:scale-100">
           <div className="w-full h-full print:w-full">
             {renderTemplate()}
           </div>
