@@ -7,12 +7,12 @@ interface Props {
 }
 
 export function StandardTemplate({ data }: Props) {
-  const customFormat = (dateStr: string) => {
+  const customFormat = (dateStr?: string) => {
     try {
       if (!dateStr) return '';
       return format(new Date(dateStr), 'dd MMM yyyy');
     } catch (e) {
-      return dateStr;
+      return dateStr || '';
     }
   };
 
