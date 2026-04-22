@@ -230,11 +230,11 @@ export function InvoiceForm({ data, onChange, onSaveProfile, onSaveInvoice }: Pr
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Due Date</label>
+            <label className="block text-xs font-medium text-slate-600 mb-1">Due Date (Optional)</label>
             <input
               type="date"
               className="w-full text-sm border border-slate-300 rounded px-3 py-2 bg-slate-50 focus:ring-2 focus:ring-blue-500"
-              value={data.dueDate}
+              value={data.dueDate || ''}
               onChange={(e) => updateField('dueDate', e.target.value)}
               title="Due date"
             />

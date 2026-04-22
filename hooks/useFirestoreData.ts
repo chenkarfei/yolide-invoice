@@ -80,10 +80,19 @@ export function useFirestoreData(user: any, invoiceData: InvoiceData, setInvoice
     try {
         const invoiceId = invoiceData.invoiceNum || `INV-${Date.now()}`;
         const docRef = doc(db, 'users', user.uid, 'invoices', invoiceId);
+        
+        // Check if invoice exists to preserve createdAt
+        const docSnap = await getDoc(docRef);
+        let createdAt = new Date().toISOString();
+        
+        if (docSnap.exists()) {
+            createdAt = docSnap.data().createdAt || createdAt;
+        }
+
         await setDoc(docRef, {
             ...invoiceData,
             userId: user.uid,
-            createdAt: new Date().toISOString(),
+            createdAt: createdAt,
             updatedAt: new Date().toISOString(),
         });
         alert('Invoice saved successfully!');

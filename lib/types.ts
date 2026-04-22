@@ -20,7 +20,7 @@ export interface InvoiceData {
 
   invoiceNum: string;
   issueDate: string;
-  dueDate: string;
+  dueDate?: string;
 
   items: InvoiceItem[];
 

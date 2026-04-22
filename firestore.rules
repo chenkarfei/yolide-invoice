@@ -1,50 +1,79 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Default deny
+    // 0. Global Safety Net
     match /{document=**} {
       allow read, write: if false;
     }
 
-    function isSignedIn() {
-      return request.auth != null;
+    // --- Phase 3: Primitives ---
+    function isSignedIn() { return request.auth != null; }
+    function isVerified() { return isSignedIn() && request.auth.token.email_verified == true; }
+    function isOwner(userId) { return isVerified() && request.auth.uid == userId; }
+    function isValidId(id) { 
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-\\.\\s]+$'); 
+    }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    // --- Phase 4: Entity Validations ---
+
+    function isValidInvoice(data) {
+      return data.userId == request.auth.uid &&
+             isValidId(data.userId) &&
+             data.invoiceNum is string && data.invoiceNum.size() <= 64 &&
+             data.items is list && data.items.size() <= 100 &&
+             // Validate types of basic fields if present
+             (data.get('companyName', '') is string) &&
+             (data.get('clientName', '') is string) &&
+             // taxRate and discount can be numbers or strings from the app state
+             (data.get('taxRate', 0) is number || data.get('taxRate', '0') is string) &&
+             (data.get('discount', 0) is number || data.get('discount', '0') is string) &&
+             // Timestamp format string check (loose since app uses ISO strings)
+             data.updatedAt is string && data.updatedAt.size() <= 64;
     }
 
-    function isOwner(userId) {
-      return isSignedIn() && request.auth.uid == userId;
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['companyName']) &&
+             data.companyName is string && data.companyName.size() <= 200 &&
+             (data.get('defaultTaxRate', 0) is number || data.get('defaultTaxRate', '0') is string);
     }
 
-    function isValidId(id) {
-       return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
-    }
+    // --- Collection Routes ---
 
     // User Profile
     match /users/{userId} {
       allow get: if isOwner(userId);
-      allow write: if isOwner(userId) && isValidUserProfile(request.resource.data);
-
-      function isValidUserProfile(data) {
-        return data.keys().hasAll(['companyName']) &&
-               data.companyName is string && data.companyName.size() <= 200;
-      }
+      allow create: if isOwner(userId) && isValidUserProfile(incoming());
+      allow update: if isOwner(userId) && isValidUserProfile(incoming()) && (
+        incoming().diff(existing()).affectedKeys().hasOnly([
+          'companyName', 'companyAddress', 'companyRegNum', 'companyContact', 
+          'companyLogo', 'defaultTaxRate', 'defaultTerms', 'updatedAt'
+        ])
+      );
     }
 
     // Invoices
     match /users/{userId}/invoices/{invoiceId} {
       allow list: if isOwner(userId);
       allow get: if isOwner(userId);
-      allow create: if isOwner(userId) && isValidInvoice(request.resource.data) && isValidId(invoiceId);
-      allow update: if isOwner(userId) && isValidInvoice(request.resource.data) && (
-        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['companyName', 'companyAddress', 'companyRegNum', 'companyContact', 'companyLogo', 'clientName', 'clientAddress', 'clientContact', 'invoiceNum', 'issueDate', 'dueDate', 'items', 'taxRate', 'discount', 'notes', 'terms', 'template', 'updatedAt'])
+      
+      allow create: if isOwner(userId) && isValidInvoice(incoming()) && isValidId(invoiceId);
+      
+      allow update: if isOwner(userId) && isValidInvoice(incoming()) && (
+        // Action: Generic Update
+        incoming().diff(existing()).affectedKeys().hasOnly([
+          'companyName', 'companyAddress', 'companyRegNum', 'companyContact', 'companyLogo',
+          'clientName', 'clientAddress', 'clientContact',
+          'invoiceNum', 'issueDate', 'dueDate', 'items', 'taxRate', 'discount',
+          'notes', 'terms', 'template', 'updatedAt'
+        ]) &&
+        // Immutability
+        incoming().userId == existing().userId &&
+        incoming().get('createdAt', '') == existing().get('createdAt', '')
       );
+      
       allow delete: if isOwner(userId);
-
-      function isValidInvoice(data) {
-        return data.userId == request.auth.uid &&
-               data.invoiceNum is string && data.invoiceNum.size() <= 50 &&
-               data.items is list && data.items.size() <= 100 &&
-               (data.items.size() == 0 || data.items[0].description is string);
-      }
     }
   }
 }
