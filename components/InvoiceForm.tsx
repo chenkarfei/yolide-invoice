@@ -268,8 +268,11 @@ export function InvoiceForm({ data, onChange, onSaveProfile, onSaveInvoice, onTo
            </div>
         ) : (
           <div className="space-y-3">
-            {data.items.map((item) => (
+            {data.items.map((item, index) => (
               <div key={item.id} className="flex gap-3 items-start bg-slate-50 p-3 rounded-lg border border-slate-200 shadow-sm relative group">
+                <div className="flex h-9 w-6 items-center justify-center text-xs font-black text-slate-300">
+                  {(index + 1).toString().padStart(2, '0')}
+                </div>
                 <div className="flex-1">
                   <input
                     type="text"

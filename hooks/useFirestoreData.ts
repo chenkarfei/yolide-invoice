@@ -47,6 +47,7 @@ export function useFirestoreData(user: any, invoiceData: InvoiceData, setInvoice
   // Load invoices when user changes
   useEffect(() => {
     if (user) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       fetchInvoices();
     } else {
       setSavedInvoices([]);

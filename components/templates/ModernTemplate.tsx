@@ -108,10 +108,10 @@ export function ModernTemplate({ data }: Props) {
             <tbody className="divide-y divide-gray-100">
               {data.items.map((item, index) => (
                 <tr key={item.id} className="bg-white">
-                  <td className="py-4 px-4 whitespace-pre-wrap font-medium text-gray-800">{item.description || `Item ${index + 1}`}</td>
-                  <td className="py-4 px-4 text-center text-gray-500">{item.quantity}</td>
-                  <td className="py-4 px-4 text-right text-gray-500">{formatCurrency(Number(item.unitPrice))}</td>
-                  <td className="py-4 px-4 text-right font-bold text-gray-900">{formatCurrency(Number(item.quantity) * Number(item.unitPrice))}</td>
+                  <td className="py-4 px-4 whitespace-pre-wrap font-medium text-gray-800 text-xs">{item.description || `Item ${index + 1}`}</td>
+                  <td className="py-4 px-4 text-center text-gray-500 text-xs">{item.quantity}</td>
+                  <td className="py-4 px-4 text-right text-gray-500 text-xs">{formatCurrency(Number(item.unitPrice))}</td>
+                  <td className="py-4 px-4 text-right font-bold text-gray-900 text-xs">{formatCurrency(Number(item.quantity) * Number(item.unitPrice))}</td>
                 </tr>
               ))}
               {data.items.length === 0 && (

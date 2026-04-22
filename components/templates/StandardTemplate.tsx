@@ -118,12 +118,12 @@ export function StandardTemplate({ data }: Props) {
                     <td className="py-3 px-6">
                       <div className="flex gap-4">
                          <span className="text-[10px] font-black text-slate-300 mt-0.5">{(index + 1).toString().padStart(2, '0')}</span>
-                         <p className="font-bold text-slate-800 whitespace-pre-wrap leading-tight text-xs">{item.description || `Generic Item Detail`}</p>
+                         <p className="font-bold text-slate-800 whitespace-pre-wrap leading-tight text-[10px]">{item.description || `Generic Item Detail`}</p>
                       </div>
                     </td>
-                    <td className="py-3 text-center px-4 text-slate-600 font-bold text-xs">{item.quantity}</td>
-                    <td className="py-3 text-right px-4 text-slate-500 font-medium text-xs">{formatCurrency(Number(item.unitPrice)).replace('RM', '').trim()}</td>
-                    <td className="py-3 text-right px-6 text-slate-950 font-black tracking-tight text-xs">{formatCurrency(Number(item.quantity) * Number(item.unitPrice)).replace('RM', '').trim()}</td>
+                    <td className="py-3 text-center px-4 text-slate-600 font-bold text-[10px]">{item.quantity}</td>
+                    <td className="py-3 text-right px-4 text-slate-500 font-medium text-[10px]">{formatCurrency(Number(item.unitPrice)).replace('RM', '').trim()}</td>
+                    <td className="py-3 text-right px-6 text-slate-950 font-black tracking-tight text-[10px]">{formatCurrency(Number(item.quantity) * Number(item.unitPrice)).replace('RM', '').trim()}</td>
                   </tr>
                 ))}
                 {data.items.length === 0 && (
