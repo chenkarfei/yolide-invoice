@@ -2,7 +2,7 @@
 
 import { InvoiceData, InvoiceItem, TemplateType } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
-import { Plus, Trash2, Image as ImageIcon, Sparkles, Save } from 'lucide-react';
+import { Plus, Trash2, Image as ImageIcon, Sparkles, Save, Library } from 'lucide-react';
 import { ChangeEvent } from 'react';
 import { AuthStatus } from './AuthStatus';
 
@@ -11,9 +11,11 @@ interface Props {
   onChange: (data: InvoiceData) => void;
   onSaveProfile?: () => void;
   onSaveInvoice?: () => void;
+  onToggleLibrary?: () => void;
+  isLibraryOpen?: boolean;
 }
 
-export function InvoiceForm({ data, onChange, onSaveProfile, onSaveInvoice }: Props) {
+export function InvoiceForm({ data, onChange, onSaveProfile, onSaveInvoice, onToggleLibrary, isLibraryOpen }: Props) {
   const updateField = (field: keyof InvoiceData, value: any) => {
     onChange({ ...data, [field]: value });
   };
@@ -49,6 +51,13 @@ export function InvoiceForm({ data, onChange, onSaveProfile, onSaveInvoice }: Pr
     <div className="p-6 space-y-8 bg-white h-full overflow-y-auto w-full max-w-2xl">
       <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-3">
+          <button 
+            onClick={onToggleLibrary}
+            className={`h-8 w-8 rounded flex items-center justify-center transition-all ${isLibraryOpen ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
+            title="Open Invoice Library"
+          >
+            <Library size={18} />
+          </button>
           <div className="h-8 w-8 rounded bg-blue-600 flex items-center justify-center text-white font-bold">MY</div>
           <h1 className="text-lg font-bold tracking-tight text-slate-800 uppercase">InvoisPro</h1>
         </div>

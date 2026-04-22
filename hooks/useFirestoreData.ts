@@ -1,10 +1,12 @@
-import { useEffect } from 'react';
-import { doc, getDoc, setDoc, getDocFromServer } from 'firebase/firestore';
+import { useEffect, useState, useCallback } from 'react';
+import { doc, getDoc, setDoc, getDocFromServer, collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { handleFirestoreError } from '@/lib/firestore-utils';
 import { InvoiceData } from '@/lib/types';
 
 export function useFirestoreData(user: any, invoiceData: InvoiceData, setInvoiceData: (data: InvoiceData) => void) {
+  const [savedInvoices, setSavedInvoices] = useState<InvoiceData[]>([]);
+  const [isLoadingInvoices, setIsLoadingInvoices] = useState(false);
   
   // Test connection on boot as per instructions
   useEffect(() => {
@@ -19,6 +21,37 @@ export function useFirestoreData(user: any, invoiceData: InvoiceData, setInvoice
     }
     testConnection();
   }, []);
+
+  // Load invoices list
+  const fetchInvoices = useCallback(async () => {
+    if (!user) return;
+    setIsLoadingInvoices(true);
+    try {
+      const q = query(
+        collection(db, 'users', user.uid, 'invoices'),
+        orderBy('updatedAt', 'desc')
+      );
+      const querySnapshot = await getDocs(q);
+      const invoices: InvoiceData[] = [];
+      querySnapshot.forEach((doc) => {
+        invoices.push(doc.data() as InvoiceData);
+      });
+      setSavedInvoices(invoices);
+    } catch (err) {
+      handleFirestoreError(err, 'list', `users/${user.uid}/invoices`);
+    } finally {
+      setIsLoadingInvoices(false);
+    }
+  }, [user]);
+
+  // Load invoices when user changes
+  useEffect(() => {
+    if (user) {
+      fetchInvoices();
+    } else {
+      setSavedInvoices([]);
+    }
+  }, [user, fetchInvoices]);
 
   // Load profile when user logs in
   useEffect(() => {
@@ -48,7 +81,8 @@ export function useFirestoreData(user: any, invoiceData: InvoiceData, setInvoice
     }
 
     loadProfile();
-  }, [user, setInvoiceData, invoiceData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, setInvoiceData]);
 
   const saveProfile = async () => {
     if (!user) return;
@@ -96,10 +130,11 @@ export function useFirestoreData(user: any, invoiceData: InvoiceData, setInvoice
             updatedAt: new Date().toISOString(),
         });
         alert('Invoice saved successfully!');
+        fetchInvoices(); // Refresh list after saving
     } catch (err) {
         handleFirestoreError(err, 'write', `users/${user.uid}/invoices/new`);
     }
   };
 
-  return { saveProfile, saveInvoice };
+  return { saveProfile, saveInvoice, savedInvoices, isLoadingInvoices, fetchInvoices };
 }

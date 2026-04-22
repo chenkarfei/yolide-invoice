@@ -39,20 +39,27 @@ export function ModernTemplate({ data }: Props) {
           <div className="absolute top-1/2 left-1/4 w-32 h-32 bg-white rounded-full blur-3xl opacity-30"></div>
         </div>
 
-        <div className="flex flex-col max-w-[50%] relative z-10">
+        <div className="flex flex-col max-w-[60%] relative z-10">
           {data.companyLogo ? (
             <div className="mb-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={data.companyLogo} alt="Company Logo" className="max-h-20 object-contain drop-shadow-md" />
             </div>
           ) : (
-            <div className="text-3xl font-black tracking-tighter mb-2 uppercase leading-none">{data.companyName || 'YOUR COMPANY'}</div>
+            <div className="text-3xl font-black tracking-tighter mb-1 uppercase leading-none">{data.companyName || 'YOUR COMPANY'}</div>
           )}
-          {data.companyRegNum && (
-            <div className="inline-block px-2 py-0.5 bg-white/20 backdrop-blur-sm rounded mt-1 w-fit">
-              <p className="text-[10px] text-white font-bold tracking-widest">REG: {data.companyRegNum}</p>
+          
+          <div className="flex flex-col gap-1">
+            {data.companyRegNum && (
+              <div className="inline-block px-2 py-0.5 bg-white/20 backdrop-blur-sm rounded w-fit">
+                <p className="text-[10px] text-white font-bold tracking-widest uppercase truncate">REG: {data.companyRegNum}</p>
+              </div>
+            )}
+            <div className="text-[11px] text-blue-100 font-medium leading-tight max-w-sm">
+               <p className="whitespace-pre-line opacity-90">{data.companyAddress}</p>
+               {data.companyContact && <p className="mt-1 font-black text-white">{data.companyContact}</p>}
             </div>
-          )}
+          </div>
         </div>
 
         <div className="text-right relative z-10">
@@ -71,7 +78,7 @@ export function ModernTemplate({ data }: Props) {
             {data.clientAddress && <p className="whitespace-pre-line text-slate-600 font-medium leading-relaxed">{data.clientAddress}</p>}
             {data.clientContact && <p className="text-slate-400 mt-2 font-bold text-xs">{data.clientContact}</p>}
         </div>
-        <div className="w-[45%] flex flex-col items-end text-right">
+        <div className="w-[45%] flex flex-col items-end text-right justify-start">
             <div className="bg-slate-50 p-5 rounded-2xl w-full border border-slate-100 shadow-sm relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-2 h-full bg-[#155DFC]"></div>
                 <div className="flex justify-between mb-3">
@@ -83,11 +90,6 @@ export function ModernTemplate({ data }: Props) {
                     <span className="font-black text-red-500">{customFormat(data.dueDate)}</span>
                 </div>
             </div>
-             <div className="mt-6 text-right">
-                <h3 className="text-[#155DFC] font-black uppercase tracking-widest text-[10px] mb-2 border-b-2 border-[#155DFC]/10 pb-1 w-fit ml-auto">Company Details</h3>
-                <p className="whitespace-pre-line text-slate-600 font-medium leading-relaxed italic">{data.companyAddress}</p>
-                {data.companyContact && <p className="text-slate-900 mt-1 font-black text-xs">{data.companyContact}</p>}
-             </div>
         </div>
       </div>
 
