@@ -33,7 +33,7 @@ export default function Home() {
     template: 'standard',
   }));
 
-  const { saveProfile, saveInvoice, savedInvoices, isLoadingInvoices, fetchInvoices } = useFirestoreData(user, invoiceData, setInvoiceData);
+  const { saveProfile, saveInvoice, deleteInvoice, savedInvoices, isLoadingInvoices, fetchInvoices } = useFirestoreData(user, invoiceData, setInvoiceData);
 
   const handleSelectInvoice = (invoice: InvoiceData) => {
     setInvoiceData(invoice);
@@ -53,6 +53,7 @@ export default function Home() {
         <InvoiceLibrary 
           invoices={savedInvoices} 
           onSelect={handleSelectInvoice} 
+          onDelete={deleteInvoice}
           isLoading={isLoadingInvoices}
           onClose={() => setShowLibrary(false)}
         />

@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { doc, getDoc, setDoc, getDocFromServer, collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { doc, getDoc, setDoc, getDocFromServer, collection, getDocs, orderBy, query, deleteDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { handleFirestoreError } from '@/lib/firestore-utils';
 import { InvoiceData } from '@/lib/types';
@@ -136,5 +136,17 @@ export function useFirestoreData(user: any, invoiceData: InvoiceData, setInvoice
     }
   };
 
-  return { saveProfile, saveInvoice, savedInvoices, isLoadingInvoices, fetchInvoices };
+  const deleteInvoice = async (invoiceNum: string) => {
+    if (!user) return;
+    
+    try {
+      const docRef = doc(db, 'users', user.uid, 'invoices', invoiceNum);
+      await deleteDoc(docRef);
+      fetchInvoices();
+    } catch (err) {
+      handleFirestoreError(err, 'delete', `users/${user.uid}/invoices/${invoiceNum}`);
+    }
+  };
+
+  return { saveProfile, saveInvoice, deleteInvoice, savedInvoices, isLoadingInvoices, fetchInvoices };
 }
