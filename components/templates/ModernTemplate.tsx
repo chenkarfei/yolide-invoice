@@ -80,8 +80,8 @@ export function ModernTemplate({ data }: Props) {
                 </div>
                 {data.dueDate && (
                   <div className="flex justify-between">
-                      <span className="text-gray-500 font-medium">Due Date</span>
-                      <span className="font-semibold text-gray-900">{customFormat(data.dueDate)}</span>
+                      <span className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Due Date</span>
+                      <span className="font-black text-red-500">{customFormat(data.dueDate)}</span>
                   </div>
                 )}
             </div>
