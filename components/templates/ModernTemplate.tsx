@@ -6,12 +6,12 @@ interface Props {
 }
 
 export function ModernTemplate({ data }: Props) {
-  const customFormat = (dateStr?: string) => {
+  const customFormat = (dateStr: string) => {
     try {
       if (!dateStr) return '';
       return format(new Date(dateStr), 'dd MMM yyyy');
     } catch (e) {
-      return dateStr || '';
+      return dateStr;
     }
   };
 
@@ -74,16 +74,14 @@ export function ModernTemplate({ data }: Props) {
         <div className="w-[45%] flex flex-col items-end text-right">
             <div className="bg-slate-50 p-5 rounded-2xl w-full border border-slate-100 shadow-sm relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-2 h-full bg-[#155DFC]"></div>
-                <div className={`flex justify-between ${data.dueDate ? 'mb-3' : ''}`}>
+                <div className="flex justify-between mb-3">
                     <span className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Issue Date</span>
                     <span className="font-black text-slate-900">{customFormat(data.issueDate)}</span>
                 </div>
-                {data.dueDate && (
-                  <div className="flex justify-between">
-                      <span className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Due Date</span>
-                      <span className="font-black text-red-500">{customFormat(data.dueDate)}</span>
-                  </div>
-                )}
+                <div className="flex justify-between">
+                    <span className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Due Date</span>
+                    <span className="font-black text-red-500">{customFormat(data.dueDate)}</span>
+                </div>
             </div>
              <div className="mt-6 text-right">
                 <h3 className="text-[#155DFC] font-black uppercase tracking-widest text-[10px] mb-2 border-b-2 border-[#155DFC]/10 pb-1 w-fit ml-auto">Company Details</h3>

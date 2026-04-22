@@ -7,12 +7,12 @@ interface Props {
 }
 
 export function StandardTemplate({ data }: Props) {
-  const customFormat = (dateStr?: string) => {
+  const customFormat = (dateStr: string) => {
     try {
       if (!dateStr) return '';
       return format(new Date(dateStr), 'dd MMM yyyy');
     } catch (e) {
-      return dateStr || '';
+      return dateStr;
     }
   };
 
@@ -75,14 +75,8 @@ export function StandardTemplate({ data }: Props) {
             <div className="grid grid-cols-1 gap-1 text-[10px] uppercase font-bold tracking-widest text-blue-200">
                <div>Date Issue</div>
                <div className="text-white text-xs tracking-normal">{customFormat(data.issueDate)}</div>
-               {data.dueDate && (
-                 <>
-                   <div className="mt-2 text-blue-300 opacity-60">Due Date</div>
-                   <div className="text-white text-xs tracking-normal font-black underline decoration-blue-400/50 underline-offset-4">
-                     {customFormat(data.dueDate)}
-                   </div>
-                 </>
-               )}
+               <div className="mt-2 text-blue-300 opacity-60">Due Date</div>
+               <div className="text-white text-xs tracking-normal font-black underline decoration-blue-400/50 underline-offset-4">{customFormat(data.dueDate)}</div>
             </div>
           </div>
         </div>

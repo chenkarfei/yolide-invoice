@@ -7,7 +7,7 @@
       "properties": {
         "invoiceNum": { "type": "string" },
         "issueDate": { "type": "string" },
-        "dueDate": { "type": "string", "description": "Optional due date" },
+        "dueDate": { "type": "string" },
         "companyName": { "type": "string" },
         "companyAddress": { "type": "string" },
         "companyRegNum": { "type": "string" },
